@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 namespace Microsoft.Quantum.Samples {
+    open Microsoft.Quantum.Convert;
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Arrays;
@@ -38,10 +39,22 @@ namespace Microsoft.Quantum.Samples {
 
     operation TrainWineModel() : (Double[], Double) {
         // Get the first 143 samples to use as training data.
+        Message("Getting ready to train...");
         let samples = (Datasets.WineData())[...142];
         let structure = ClassifierStructure();
+        Message("Getting ready to train....");
         // Sample a random set of parameters.
         let initialParameters = SampleInitialParameters(16, structure);
+        Message("Getting ready to train.....");
+
+        let options =
+            DefaultTrainingOptions()
+                w/ LearningRate <- 0.4
+                w/ MinibatchSize <- 2
+                w/ Tolerance <- 0.01
+                w/ NMeasurements <- 10000
+                w/ MaxEpochs <- 8
+                w/ VerboseMessage <- Message;
 
         Message("Ready to train.");
         let optimizedModel = TrainSequentialClassifier(
@@ -50,12 +63,7 @@ namespace Microsoft.Quantum.Samples {
                 initialParameters
             ),
             samples,
-            DefaultTrainingOptions()
-                w/ LearningRate <- 0.4
-                w/ MinibatchSize <- 2
-                w/ Tolerance <- 0.01
-                w/ NMeasurements <- 10000
-                w/ MaxEpochs <- 16,
+            options,
             DefaultSchedule(samples),
             DefaultSchedule(samples)
         );
@@ -66,7 +74,7 @@ namespace Microsoft.Quantum.Samples {
     operation ValidateWineModel(
         parameters : Double[],
         bias : Double
-    ) : Int {
+    ) : Double {
         // Get the remaining samples to use as validation data.
         let samples = (Datasets.WineData())[143...];
         let tolerance = 0.005;
@@ -78,7 +86,7 @@ namespace Microsoft.Quantum.Samples {
             nMeasurements,
             DefaultSchedule(samples)
         );
-        return results::NMisclassifications;
+        return IntAsDouble(results::NMisclassifications) / IntAsDouble(Length(samples));
     }
 
 }
