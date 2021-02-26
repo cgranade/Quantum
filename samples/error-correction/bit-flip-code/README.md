@@ -1,14 +1,34 @@
-﻿# Bit-flip Quantum Code Sample #
+---
+page_type: sample
+languages:
+- qsharp
+products:
+- qdk
+description: "This sample uses the Q# standard libraries to implement a three-qubit bit-flip quantum error correction code."
+urlFragment: bit-flip-code
+---
 
-This sample describes a simple quantum code that encodes 1 qubit into 3 qubits and protects against a single bit-flip error.
 
-## Running the Sample ##
+# Bit-flip Quantum Code Sample
 
-Open the `QsharpSamples.sln` solution in Visual Studio and set the .csproj file in the manifest as the startup project.
-Press Start in Visual Studio to run the sample.
+This sample demonstrates: 
 
-## Manifest ##
+- Using the Q# standard libraries to implement a simple quantum error correction code.
 
-- [BitFlipCode.qs](./BitFlipCode.qs): Q# code implementing quantum operations for this sample.
-- [Driver.cs](./Driver.cs): C# code to interact with and print out results of the Q# operations for this sample.
-- [BitFlipCode.csproj](./BitFlipCode.csproj): Main C# project for the sample.
+## Prerequisites
+
+- The Microsoft [Quantum Development Kit](https://docs.microsoft.com/quantum/install-guide/).
+
+## Running the Sample
+
+To run the sample, use the `dotnet run` command from your terminal.
+
+## Manifest
+
+- [BitFlipCode.qs](https://github.com/microsoft/Quantum/blob/main/samples/error-correction/bit-flip-code/BitFlipCode.qs): Q# code implementing quantum operations for this sample.
+- [Program.qs](https://github.com/microsoft/Quantum/blob/main/samples/error-correction/bit-flip-code/Program.qs): Q# entry point to interact with and print out results of the Q# operations for this sample.
+- [BitFlipCode.csproj](https://github.com/microsoft/Quantum/blob/main/samples/error-correction/bit-flip-code/BitFlipCode.csproj): Main Q# project for the sample.
+
+## Further resources
+
+- [Error correction library concepts](https://docs.microsoft.com/quantum/libraries/standard/error-correction)
